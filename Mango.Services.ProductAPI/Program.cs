@@ -7,7 +7,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 builder.Services.AddAuthentication("Bearer")
@@ -16,18 +15,18 @@ builder.Services.AddAuthentication("Bearer")
         options.Authority = builder.Configuration["IdentityServerUrl"];
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = false
+            ValidateAudience = false //Why not?
         };
     });
 
-////We're not gonna be validating this in our requests, but it is an example of how authorization policies and scopes can be validated
 builder.Services.AddAuthorization(options =>
 {
+    //We're not gonna be validating this in our requests, but it is an example of how authorization policies and scopes can be validated
     options.AddPolicy("ApiScope", policy =>
     {
         policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "mango");
-    });
+        policy.RequireClaim("scope", "mangoAdmin");
+    }); //We could add the option to validate against this or other policies in the [Authorize] attribute
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -43,7 +42,8 @@ builder.Services.AddSwaggerGen(c => {
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
     });
-
+    
+    //This is how we handle security with openid in Swagger
     c.AddSecurityRequirement(new OpenApiSecurityRequirement 
     {
         {

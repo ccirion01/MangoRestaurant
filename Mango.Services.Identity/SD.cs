@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using static System.Net.WebRequestMethods;
 
 namespace Mango.Services.Identity
 {
@@ -12,7 +11,7 @@ namespace Mango.Services.Identity
         public static IEnumerable<IdentityResource> IdentityResources =>
             new List<IdentityResource>()
             {
-                new IdentityResources.OpenId(), // This initializes open id
+                new IdentityResources.OpenId(), //This initializes open id
                 new IdentityResources.Email(),
                 new IdentityResources.Profile(),
             };
@@ -35,7 +34,7 @@ namespace Mango.Services.Identity
                 {
                     ClientId = "client",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ClientCredentials, //???
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = {"read", "write", "profile"} //Profile is a default scope in IS
                 },
                 new Client

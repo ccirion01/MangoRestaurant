@@ -28,16 +28,17 @@ var identityBuilder = builder.Services.AddIdentityServer(options =>
     options.Events.RaiseInformationEvents = true;
     options.Events.RaiseFailureEvents = true;
     options.Events.RaiseSuccessEvents = true;
-    options.EmitStaticAudienceClaim = true;
+    options.EmitStaticAudienceClaim = true; //This will generate an aud claim in the issuer_name/resources format
 })
     .AddInMemoryIdentityResources(SD.IdentityResources)
     .AddInMemoryApiScopes(SD.ApiScopes)
     .AddInMemoryClients(SD.Clients)
-    .AddAspNetIdentity<ApplicationUser>();
+    .AddAspNetIdentity<ApplicationUser>(); //We want it to use the asp net identity that we previously configured
+
+identityBuilder.AddDeveloperSigningCredential();
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
-
 
 var app = builder.Build();
 
