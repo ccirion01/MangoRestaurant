@@ -20,7 +20,7 @@ namespace Mango.Services.Identity
             new List<ApiScope>()
             {
                 //This allows users to access all operations
-                new ApiScope(name: "mango", displayName: "Mango Server"),
+                new ApiScope(name: "mangoAdmin", displayName: "Mango Server"),
                 //Customization for different accesses
                 new ApiScope(name: "read", displayName: "Read your data"),
                 new ApiScope(name: "write", displayName: "Write your data"),
@@ -49,7 +49,7 @@ namespace Mango.Services.Identity
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "mango"
+                        "mangoAdmin"
                     }
                 }
             };

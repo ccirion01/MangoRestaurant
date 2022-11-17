@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(options =>
 
     options.TokenValidationParameters.NameClaimType = "name";
     options.TokenValidationParameters.RoleClaimType = "role";
-    options.Scope.Add("mango"); //The one we defined in Scopes
+    options.Scope.Add("mangoAdmin"); //The one we defined in Scopes
     options.SaveTokens = true;
     //All these values must match the ones configured in the Identity service, in SD Class.
 });

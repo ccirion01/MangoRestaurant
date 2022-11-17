@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Mango.Services.ProductAPI.Controllers
 {
     [Route("api/products")]
-    public class ProductAPIController /*: BaseAPIController<ProductDto, IProductRepository>*/
+    public class ProductAPIController
     {        
         private IProductRepository _repository;
 
@@ -16,11 +16,8 @@ namespace Mango.Services.ProductAPI.Controllers
             _repository = repository;
         }
 
-        //public ProductAPIController(IProductRepository repository) : base(repository)
-        //{
-        //}
-
         [HttpGet]
+        [Authorize]
         public async Task<ResponseDto<IEnumerable<ProductDto>>> Get()
         {
             //return await Execute(() => await _repository.GetAll());
@@ -38,6 +35,7 @@ namespace Mango.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         public async Task<ResponseDto<ProductDto>> Get(int id)
         {
@@ -90,7 +88,7 @@ namespace Mango.Services.ProductAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SD.Admin)]
         public async Task<ResponseDto<bool>> Delete(int id)
         {
             ResponseDto<bool> response = new();
