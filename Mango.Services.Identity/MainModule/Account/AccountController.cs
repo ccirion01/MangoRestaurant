@@ -124,14 +124,16 @@ namespace IdentityServerHost.Quickstart.UI
                     await _events.RaiseAsync(new UserLoginSuccessEvent(
                             user.UserName, 
                             user.Id, 
-                            user.UserName, 
+                            $"{user.FirstName} {user.LastName}",
                             clientId: context?.Client.ClientId));
 
+                    //Context is not null, so we can trust the context Url
                     if (context != null)
                     {
                         return Redirect(model.ReturnUrl);
                     }
 
+                    //To avoid phishing
                     if (Url.IsLocalUrl(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
