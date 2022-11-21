@@ -124,7 +124,7 @@ namespace IdentityServerHost.Quickstart.UI
                     await _events.RaiseAsync(new UserLoginSuccessEvent(
                             user.UserName, 
                             user.Id, 
-                            $"{user.FirstName} {user.LastName}",
+                            user.UserName, 
                             clientId: context?.Client.ClientId));
 
                     //Context is not null, so we can trust the context Url
