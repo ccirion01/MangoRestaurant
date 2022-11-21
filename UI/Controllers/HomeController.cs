@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -20,7 +21,8 @@ namespace UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ResponseDto response = await _productService.GetAllAsync("");
+            var token = await HttpContext.GetTokenAsync("access_token");
+            ResponseDto response = await _productService.GetAllAsync(token);
             List<ProductDto> products = new();
 
             if (response?.IsSuccess ?? false)
