@@ -21,8 +21,7 @@ namespace UI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
-            ResponseDto response = await _productService.GetAllAsync(token);
+            ResponseDto response = await _productService.GetAllAsync(await GetToken());
             List<ProductDto> products = new();
 
             if (response?.IsSuccess ?? false)
@@ -34,7 +33,7 @@ namespace UI.Controllers
         [Authorize]
         public async Task<IActionResult> Details(int productId)
         {
-            ResponseDto response = await _productService.GetByIdAsync(productId, "");
+            ResponseDto response = await _productService.GetByIdAsync(productId, await GetToken());
             ProductDto model = new();
 
             if (response?.IsSuccess ?? false)
@@ -64,5 +63,7 @@ namespace UI.Controllers
         {
             return SignOut("Cookies", "oidc");
         }
+
+        private async Task<string> GetToken() => await HttpContext.GetTokenAsync("access_token");
     }
 }
