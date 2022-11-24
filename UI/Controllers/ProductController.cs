@@ -19,8 +19,7 @@ namespace UI.Controllers
 
         public async Task<IActionResult> ProductIndex()
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
-            ResponseDto response = await _productService.GetAllAsync(token);
+            ResponseDto response = await _productService.GetAllAsync(await GetToken());
             List<ProductDto> products = new();
 
             if (response?.IsSuccess ?? false)
@@ -40,8 +39,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = await HttpContext.GetTokenAsync("access_token");
-                ResponseDto response = await _productService.CreateAsync(product, token);
+                ResponseDto response = await _productService.CreateAsync(product, await GetToken());
 
                 if (response?.IsSuccess ?? false)
                     return RedirectToAction(nameof(ProductIndex));
@@ -52,8 +50,7 @@ namespace UI.Controllers
 
         public async Task<IActionResult> ProductEdit(int id)
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
-            ResponseDto response = await _productService.GetByIdAsync(id, token);
+            ResponseDto response = await _productService.GetByIdAsync(id, await GetToken());
 
             if (response?.IsSuccess ?? false)
             {
@@ -69,8 +66,7 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = await HttpContext.GetTokenAsync("access_token");
-                ResponseDto response = await _productService.UpdateAsync(product, token);
+                ResponseDto response = await _productService.UpdateAsync(product, await GetToken());
 
                 if (response?.IsSuccess ?? false)
                     return RedirectToAction(nameof(ProductIndex));
@@ -82,8 +78,7 @@ namespace UI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProductDelete(int id)
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
-            ResponseDto response = await _productService.GetByIdAsync(id, token);
+            ResponseDto response = await _productService.GetByIdAsync(id, await GetToken());
 
             if (response?.IsSuccess ?? false)
             {
@@ -100,13 +95,14 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var token = await HttpContext.GetTokenAsync("access_token");
-                ResponseDto response = await _productService.DeleteAsync(product.ProductId, token);
+                ResponseDto response = await _productService.DeleteAsync(product.ProductId, await GetToken());
 
                 if (response?.IsSuccess ?? false)
                     return RedirectToAction(nameof(ProductIndex));
             }
             return View(product);
         }
+
+        private async Task<string> GetToken() => await HttpContext.GetTokenAsync("access_token");
     }
 }
