@@ -55,7 +55,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 1,
                             CategoryName = "Appetizer",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://cotystorageaccount.blob.core.windows.net/dotnetmastery/14.jpg",
+                            ImageUrl = "https://i.blogs.es/e32045/samosas-vegetales/650_1200.jpg",
                             Name = "Samosa",
                             Price = 15.0
                         },
@@ -64,7 +64,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 2,
                             CategoryName = "Appetizer",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://cotystorageaccount.blob.core.windows.net/dotnetmastery/12.jpg",
+                            ImageUrl = "https://www.whiskaffair.com/wp-content/uploads/2018/07/Achari-Paneer-Tikka-1-3.jpg",
                             Name = "Paneer Tikka",
                             Price = 13.99
                         },
@@ -73,7 +73,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 3,
                             CategoryName = "Dessert",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://cotystorageaccount.blob.core.windows.net/dotnetmastery/11.jpg",
+                            ImageUrl = "https://images.immediate.co.uk/production/volatile/sites/30/2021/10/Sweet-Potato-Pie-372e836.jpg",
                             Name = "Sweet Pie",
                             Price = 10.99
                         },
@@ -82,7 +82,7 @@ namespace Mango.Services.ProductAPI.Migrations
                             ProductId = 4,
                             CategoryName = "Entree",
                             Description = "Praesent scelerisque, mi sed ultrices condimentum, lacus ipsum viverra massa, in lobortis sapien eros in arcu. Quisque vel lacus ac magna vehicula sagittis ut non lacus.<br/>Sed volutpat tellus lorem, lacinia tincidunt tellus varius nec. Vestibulum arcu turpis, facilisis sed ligula ac, maximus malesuada neque. Phasellus commodo cursus pretium.",
-                            ImageUrl = "https://cotystorageaccount.blob.core.windows.net/dotnetmastery/13.jpg",
+                            ImageUrl = "https://www.indianhealthyrecipes.com/wp-content/uploads/2021/11/pav-bhaji.jpg",
                             Name = "Pav Bhaji",
                             Price = 15.0
                         });

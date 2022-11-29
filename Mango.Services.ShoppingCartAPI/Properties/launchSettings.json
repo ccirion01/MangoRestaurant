@@ -1,13 +1,13 @@
 {
   "profiles": {
-    "Mango.Services.ProductAPI": {
+    "Mango.Services.ShoppingCartAPI": {
       "commandName": "Project",
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "https://localhost:7116;http://localhost:5116"
+      "applicationUrl": "https://localhost:7006;http://localhost:5006"
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -23,8 +23,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:26112",
-      "sslPort": 44338
+      "applicationUrl": "http://localhost:2462",
+      "sslPort": 44302
     }
   }
 }
