@@ -6,8 +6,9 @@ using UI.Services.IServices;
 
 namespace UI.Services
 {
-    public class BaseService : IBaseService
+    public abstract class BaseService : IBaseService
     {
+        internal abstract string Url { get; }
         public ResponseDto ResponseModel { get; set; }
         public IHttpClientFactory ClientFactory { get; set; }
 
@@ -22,6 +23,7 @@ namespace UI.Services
             try
             {
                 HttpClient client = ClientFactory.CreateClient("MangoAPI");
+                //client.Timeout = TimeSpan.FromDays(1);
                 HttpRequestMessage message = new HttpRequestMessage();
 
                 message.Method = apiRequest.ApiType.ToHttpMethod();
@@ -51,6 +53,21 @@ namespace UI.Services
         public void Dispose()
         {
             GC.SuppressFinalize(true);
+        }
+
+        internal ApiRequest CreateApiRequest(
+           SD.ApiType apiType,
+           string token,
+           string url = null,
+           object data = null)
+        {
+            return new()
+            {
+                ApiType = apiType,
+                Url = url ?? Url,
+                Data = data,
+                AccessToken = token
+            };
         }
     }
 }

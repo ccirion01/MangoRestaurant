@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using UI;
 using UI.Services;
 using UI.Services.IServices;
@@ -5,11 +6,13 @@ using UI.Services.IServices;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient();
 
 SD.ProductAPIBase = builder.Configuration["ServiceUrls:ProductAPI"];
+SD.ShoppingCartAPIBase = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddControllersWithViews();
 
@@ -26,6 +29,8 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = "mango"; //The one we defined in Clients
     options.ClientSecret = "secret"; //The one we defined in Clients
     options.ResponseType = "code"; //The AllowedGrantTypes we defined in Clients
+    options.ClaimActions.MapJsonKey("role", "role", "role");
+    options.ClaimActions.MapJsonKey("sub", "sub", "sub");
 
     options.TokenValidationParameters.NameClaimType = "name";
     options.TokenValidationParameters.RoleClaimType = "role";
