@@ -20,7 +20,6 @@ namespace Mango.Services.ProductAPI.Controllers
         [Authorize]
         public async Task<ResponseDto<IEnumerable<ProductDto>>> Get()
         {
-            //return await Execute(() => await _repository.GetAll());
             ResponseDto<IEnumerable<ProductDto>> response = new();            
             try
             {

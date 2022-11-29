@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -101,5 +102,7 @@ namespace UI.Controllers
         {
             return SignOut("Cookies", "oidc");
         }
+
+        private async Task<string> GetToken() => await HttpContext.GetTokenAsync("access_token");
     }
 } 
