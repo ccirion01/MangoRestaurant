@@ -5,7 +5,7 @@ namespace UI.Services
 {
     public class ProductService : BaseService, IProductService
     {
-        private readonly string _url = SD.ProductAPIBase + "api/products";
+        internal override string Url  => SD.ProductAPIBase + "api/products";
         public ProductService(IHttpClientFactory clientFactory) : base(clientFactory)
         {
         }
@@ -19,7 +19,7 @@ namespace UI.Services
         public async Task<ResponseDto> DeleteAsync(int id, string token)
         {
             return await SendAsync(
-                CreateApiRequest(SD.ApiType.DELETE, token, $"{_url}/{id}"));
+                CreateApiRequest(SD.ApiType.DELETE, token, $"{Url}/{id}"));
         }        
 
         public async Task<ResponseDto> GetAllAsync(string token)
@@ -31,28 +31,13 @@ namespace UI.Services
         public async Task<ResponseDto> GetByIdAsync(int id, string token)
         {
             return await SendAsync(
-                CreateApiRequest(SD.ApiType.GET, token, $"{_url}/{id}"));
+                CreateApiRequest(SD.ApiType.GET, token, $"{Url}/{id}"));
         }
 
         public async Task<ResponseDto> UpdateAsync(ProductDto product, string token)
         {
             return await SendAsync(
                 CreateApiRequest(SD.ApiType.PUT, token, data: product));
-        }
-
-        private ApiRequest CreateApiRequest(
-           SD.ApiType apiType,
-           string token,
-           string url = null,
-           object data = null)
-        {
-            return new()
-            {
-                ApiType = apiType,
-                Url = url ?? SD.ProductAPIBase + "api/products",
-                Data = data,
-                AccessToken = token
-            };
         }
     }   
 }
