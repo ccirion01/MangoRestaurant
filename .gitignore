@@ -351,3 +351,7 @@ MigrationBackup/
 
 #UI
 dist/
+
+#Keys
+*.jwk
+is-signing-key-*
