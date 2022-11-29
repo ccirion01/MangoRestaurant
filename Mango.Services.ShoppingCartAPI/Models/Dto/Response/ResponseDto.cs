@@ -7,12 +7,10 @@
         public string Message { get; set; } = string.Empty;
         public List<string> ErrorMessages { get; set; }
 
-        public void AddErrorMessage(string message)
+        public void AddExceptionMessage(Exception ex)
         {
-            if (ErrorMessages == null)
-                ErrorMessages = new List<string>();
-
-            ErrorMessages.Add(message);
+            ErrorMessages ??= new List<string>();
+            ErrorMessages.Add(ex.ToString());
         }
     }
 }
