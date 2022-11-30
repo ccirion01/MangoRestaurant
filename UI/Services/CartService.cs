@@ -31,7 +31,7 @@ namespace UI.Services
         public async Task<ResponseDto> RemoveFromCartAsync(int cartDetailId, string token)
         {
             return await SendAsync(
-                CreateApiRequest(SD.ApiType.DELETE, token, $"{Url}/{cartDetailId}"));
+                CreateApiRequest(SD.ApiType.DELETE, token, $"{Url}/remove/{cartDetailId}"));
         }
     }
 }
