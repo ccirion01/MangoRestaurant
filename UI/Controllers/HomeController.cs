@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System.Diagnostics;
 using UI.Models;
 using UI.Services.IServices;
@@ -29,8 +27,8 @@ namespace UI.Controllers
             ResponseDto response = await _productService.GetAllAsync(await GetTokenAsync());
             List<ProductDto> products = new();
 
-            if (response?.IsSuccess ?? false)
-                products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            if (IsSuccess(response))
+                products = Deserialize<List<ProductDto>>(response);
 
             return View(products);
         }
@@ -42,8 +40,8 @@ namespace UI.Controllers
             ResponseDto response = await _productService.GetByIdAsync(productId, await GetTokenAsync());
             ProductDto model = new();
 
-            if (response?.IsSuccess ?? false)
-                model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+            if (IsSuccess(response))
+                model = Deserialize<ProductDto>(response);
 
             return View(model);
         }
@@ -69,13 +67,13 @@ namespace UI.Controllers
                     }
                 }
             };
-            var product = await _productService.GetByIdAsync(productDto.ProductId, token);            
-            if (product?.IsSuccess ?? false)
-                cartDto.CartDetails.FirstOrDefault().Product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(product.Result));
+            var product = await _productService.GetByIdAsync(productDto.ProductId, token);
+            if (IsSuccess(product))
+                cartDto.CartDetails.FirstOrDefault().Product = Deserialize<ProductDto>(product);
 
             ResponseDto response = await _cartService.AddToCartAsync(cartDto, token);
 
-            if (response?.IsSuccess ?? false)
+            if (IsSuccess(response))
                 return RedirectToAction(nameof(Index));
 
             return View(productDto);
@@ -102,7 +100,5 @@ namespace UI.Controllers
         {
             return SignOut("Cookies", "oidc");
         }
-
-        private async Task<string> GetToken() => await HttpContext.GetTokenAsync("access_token");
     }
 } 
