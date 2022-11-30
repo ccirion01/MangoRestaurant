@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using UI.Models;
 using UI.Services.IServices;
 
@@ -18,11 +16,11 @@ namespace UI.Controllers
 
         public async Task<IActionResult> ProductIndex()
         {
-            ResponseDto response = await _productService.GetAllAsync(await GetToken());
+            ResponseDto response = await _productService.GetAllAsync(await GetTokenAsync());
             List<ProductDto> products = new();
 
-            if (response?.IsSuccess ?? false)
-                products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
+            if (IsSuccess(response))
+                products = Deserialize<List<ProductDto>>(response);
 
             return View(products);
         }
@@ -38,9 +36,9 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto response = await _productService.CreateAsync(product, await GetToken());
+                ResponseDto response = await _productService.CreateAsync(product, await GetTokenAsync());
 
-                if (response?.IsSuccess ?? false)
+                if (IsSuccess(response))
                     return RedirectToAction(nameof(ProductIndex));
 
             }
@@ -49,11 +47,11 @@ namespace UI.Controllers
 
         public async Task<IActionResult> ProductEdit(int id)
         {
-            ResponseDto response = await _productService.GetByIdAsync(id, await GetToken());
+            ResponseDto response = await _productService.GetByIdAsync(id, await GetTokenAsync());
 
-            if (response?.IsSuccess ?? false)
+            if (IsSuccess(response))
             {
-                ProductDto product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                ProductDto product = Deserialize<ProductDto>(response);
                 return View(product);
             }
             return NotFound();
@@ -65,9 +63,9 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto response = await _productService.UpdateAsync(product, await GetToken());
+                ResponseDto response = await _productService.UpdateAsync(product, await GetTokenAsync());
 
-                if (response?.IsSuccess ?? false)
+                if (IsSuccess(response))
                     return RedirectToAction(nameof(ProductIndex));
 
             }
@@ -77,11 +75,11 @@ namespace UI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ProductDelete(int id)
         {
-            ResponseDto response = await _productService.GetByIdAsync(id, await GetToken());
+            ResponseDto response = await _productService.GetByIdAsync(id, await GetTokenAsync());
 
-            if (response?.IsSuccess ?? false)
+            if (IsSuccess(response))
             {
-                ProductDto product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                ProductDto product = Deserialize<ProductDto>(response);
                 return View(product);
             }
             return NotFound();
@@ -94,14 +92,12 @@ namespace UI.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseDto response = await _productService.DeleteAsync(product.ProductId, await GetToken());
+                ResponseDto response = await _productService.DeleteAsync(product.ProductId, await GetTokenAsync());
 
-                if (response?.IsSuccess ?? false)
+                if (IsSuccess(response))
                     return RedirectToAction(nameof(ProductIndex));
             }
             return View(product);
         }
-
-        private async Task<string> GetToken() => await HttpContext.GetTokenAsync("access_token");
     }
 }
