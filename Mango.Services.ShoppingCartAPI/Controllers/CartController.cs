@@ -41,6 +41,7 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
         [HttpDelete]
         [Route("{userId}")]
+        [Authorize]
         public async Task<ResponseDto<bool>> Clear(string userId)
         {
             return await ExecuteBool(
@@ -50,11 +51,32 @@ namespace Mango.Services.ShoppingCartAPI.Controllers
 
         [HttpDelete]
         [Route("remove/{cartDetailId}")]
+        [Authorize]
         public async Task<ResponseDto<bool>> RemoveDetail(int cartDetailId)
         {
             return await ExecuteBool(
                 async (cartDetailId) => await _repository.RemoveDetail(cartDetailId),
                 cartDetailId);
+        }
+
+        [HttpPut]
+        [Route("applyCoupon")]
+        [Authorize]
+        public async Task<ResponseDto<bool>> ApplyCoupon([FromBody]CartHeaderDto headerDto)
+        {
+            return await ExecuteBool(
+                async (cartDetailId) => await _repository.ApplyCoupon(headerDto),
+                headerDto);
+        }
+
+        [HttpPut]
+        [Route("removeCoupon")]
+        [Authorize]
+        public async Task<ResponseDto<bool>> RemoveCoupon(string userId)
+        {
+            return await ExecuteBool(
+                async (cartDetailId) => await _repository.RemoveCoupon(userId),
+                userId);
         }
 
         #region Private Methods
